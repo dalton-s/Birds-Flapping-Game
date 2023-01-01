@@ -8,6 +8,7 @@ console.log('Client side javascript file is loaded')
 
 //MongoClient.connect()
 
+
 playerScore = 0
 
 function buttonClicked() {
