@@ -30,6 +30,7 @@ function buttonClicked() {
     playerData.score++;
     button1 = document.getElementById("btn-1");
     document.getElementById("btn-1").innerHTML = playerData.score;
+    localStorage.setItem('score', playerData.score)
 }
 
 function saveButtonClicked() {
