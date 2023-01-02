@@ -1,16 +1,17 @@
 {
   "name": "web-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Game - Tech DemoS",
   "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Dalton Shanholtz",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
-    "mongodb": "^4.13.0"
+    "mongodb": "^4.13.0",
+    "socket.io": "^4.5.4"
   }
 }

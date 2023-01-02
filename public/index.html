@@ -13,20 +13,41 @@
 
     Need to add:
     <ul>
-        <li>MongoDB</li>
+        <li>SEPERATE PAGE FOR HIGHSCORES (ALSO FIXES UPDATE BUG)</li>
     </ul>
 
     <button type="button" id="btn-1" onclick="buttonClicked()">0 - Click Me!</button>
 
     <h3>High Scores</h3>
     <ul>
-        <li>1. </li>
-        <li>2. </li>
-        <li>3. </li>
-        <li>4. </li>
-        <li>5. </li>
+        <li id='highscore-slot-1'>#1 </li>
+        <li id='highscore-slot-2'>#2 </li>
+        <li id='highscore-slot-3'>#3 </li>
+        <li id='highscore-slot-4'>#4 </li>
+        <li id='highscore-slot-5'>#5 </li>
     </ul>
+    <button type="button" id="btn-save" onclick="changeNameButtonClicked()">CHANGE NAME</button>
+    <button type="button" id="btn-save" onclick="saveButtonClicked()">Save/Update Highscores</button>
 
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+
+        socket.on('updated highscores', function(msg) {
+            console.log(msg)
+            document.getElementById('highscore-slot-1').textContent = "#1 " + msg[0][0].username + " - Score: " + msg[0][0].score;
+            document.getElementById('highscore-slot-2').textContent = "#2 " + msg[0][1].username + " - Score: " + msg[0][1].score;
+            document.getElementById('highscore-slot-3').textContent = "#3 " + msg[0][2].username + " - Score: " + msg[0][2].score;
+            document.getElementById('highscore-slot-4').textContent = "#4 " + msg[0][3].username + " - Score: " + msg[0][3].score;
+            document.getElementById('highscore-slot-5').textContent = "#5 " + msg[0][4].username + " - Score: " + msg[0][4].score;
+
+            // var item = document.createElement('li');
+            // item.textContent = msg;
+            // messages.appendChild(item);
+            // window.scrollTo(0, document.body.scrollHeight);
+        });
+    </script>
+    
 </body>
 
 </html>
