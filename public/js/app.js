@@ -18,11 +18,13 @@ if(!localStorage.getItem('name')) {
     console.log("beggining of else")
     playerData.username = localStorage.getItem('name')
     playerData.score = localStorage.getItem('score')
-    window.onload = function() {
+    window.onload = () => {
         document.getElementById('btn-1').innerHTML = playerData.score
     }
     console.log('playerscore'+playerData.score)
 }
+
+
 
 
 

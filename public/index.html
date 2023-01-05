@@ -9,20 +9,15 @@
 
 <body>
 
-    <h1>Game / Tech Demo</h1>
+    <h1>Click The Button! - Tech Demo</h1>
 
     Need to add:
     <ul>
         <li>CONVERT ALL FUNCTIONS TO ES6 ARROW</li>
-        <li>SEPERATE PAGE FOR HIGHSCORES (ALSO FIXES UPDATE BUG)</li>
-        <li>Casino Idle Sim - Manual labor button, slotmachines, various tables. Stats/Vars: Money+Popularity</li>
-        <li>Eventual graphical aspect? AKA each blackjack table bought shows up to fill the screen/casino</li>
     </ul>
 
     <button type="button" id="btn-1" onclick="buttonClicked()">0 - Click Me!</button>
-\
-CONVERT ALL FUNCTIONS TO ES6 ARROW
-CONVERT ALL FUNCTIONS TO ES6 ARROW
+    
     <h3>High Scores</h3>
     <ul>
         <li id='highscore-slot-1'>#1 </li>
@@ -31,10 +26,11 @@ CONVERT ALL FUNCTIONS TO ES6 ARROW
         <li id='highscore-slot-4'>#4 </li>
         <li id='highscore-slot-5'>#5 </li>
     </ul>
-    <button type="button" id="btn-save" onclick="changeNameButtonClicked()">CHANGE NAME</button>
-    <button type="button" id="btn-save" onclick="saveButtonClicked()">Save/Update Highscores</button>
+    <button type="button" id="btn-save" onclick="changeNameButtonClicked()">Change Username</button>
+    <button type="button" id="btn-save" onclick="saveButtonClicked()">Save To Highscores</button>
 
     <script src="/socket.io/socket.io.js"></script>
+
     <script>
         var socket = io();
 
@@ -45,12 +41,8 @@ CONVERT ALL FUNCTIONS TO ES6 ARROW
             document.getElementById('highscore-slot-3').textContent = "#3 " + msg[0][2].username + " - Score: " + msg[0][2].score;
             document.getElementById('highscore-slot-4').textContent = "#4 " + msg[0][3].username + " - Score: " + msg[0][3].score;
             document.getElementById('highscore-slot-5').textContent = "#5 " + msg[0][4].username + " - Score: " + msg[0][4].score;
-
-            // var item = document.createElement('li');
-            // item.textContent = msg;
-            // messages.appendChild(item);
-            // window.scrollTo(0, document.body.scrollHeight);
         });
+
     </script>
     
 </body>
