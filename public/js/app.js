@@ -39,7 +39,7 @@ function saveButtonClicked() {
     localStorage.setItem('score', playerData.score)
     socket.emit('player save data', playerData);
     console.log(playerData.score)
-    setTimeout(() => location.reload(), 100);
+    setTimeout(() => location.reload(), 300);
 }
 
 function changeNameButtonClicked() {
