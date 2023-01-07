@@ -1,6 +1,4 @@
 const path = require('path')
-// const express = require('express')
-// const app = express()
 const express = require('express');
 const app = express();
 const http = require('http');
@@ -20,13 +18,6 @@ const client = new MongoClient(uri);
 
 var highscores = [];
 
-// const server = require('http').createServer(app);
-// const io = require('socket.io')(server);
-// io.on('connection', () => { /* … */ });
-// server.listen(3001);
-
-
-
 async function run() {
     try {
       // Connect the client to the server (optional starting in v4.7)
@@ -34,27 +25,9 @@ async function run() {
       const db = client.db("Game");
       const coll = db.collection("high-scores");
 
-      //const highscore = coll.find();
-      //const test = coll.find()
-      //await test.forEach(console.log);
       let data = await coll.find({}).sort({ score: -1 }).limit(5).toArray();
       highscores.push(data)
       console.log(highscores)
-
-
-
-      //db.collection('high-scores').find()
-
-    //   await for(let i = 0; i < highscore.length; i++) {
-    //     console.log(highscore[0])
-    //   }
-      //await highscore.forEach(highscores.push(highscore));
-
-    //   const db = client.db('Game')
-    //   db.collection('high-scores').insertOne({
-    //     username: 'Dalton',
-    //     score: 42
-    //   })
 
       // Establish and verify connection
       await client.db("admin").command({ ping: 1 });
@@ -75,7 +48,7 @@ async function updateDatabase(newData) {
         await client.connect();
         const db = client.db("Game");
         const coll = db.collection("high-scores");
-        
+
         await coll.insertOne({
                 username: newData.username,
                 score: parseInt(newData.score)
@@ -85,15 +58,6 @@ async function updateDatabase(newData) {
         highscores = []
         let data = await coll.find({}).sort({ score: -1 }).limit(5).toArray();
         highscores.push(data)
-        console.log(highscores)
-
-
-        // highscores = await coll.find({}).sort({ score: -1 }).toArray();
-        // console.log(highscores)
-
-        // let data = await coll.find({}).toArray();
-        // highscores.push(data)
-        // console.log(highscores)
   
         // Establish and verify connection
         await client.db("admin").command({ ping: 1 });
@@ -106,10 +70,6 @@ async function updateDatabase(newData) {
 }
 
 app.use(express.static(publicDirectoryPath))
-
-app.get('/weather', (req, res) => {
-    res.send([{forecast: 'Sunny', location: 'DC'}])
-})
 
 io.on('connection', (socket) => {
     console.log('a user connected');
@@ -126,26 +86,10 @@ io.on('connection', (socket) => {
     socket.on('player save data', (newPlayerSaveData) => {
         console.log('Received new sava data (Username: ' + newPlayerSaveData.username + ', Score: ' + newPlayerSaveData.score + ')');
         updateDatabase(newPlayerSaveData)
-        //io.emit('updated highscores', highscores);
-        // highscores.push(newPlayerSaveData)
-        // console.log(highscores)
-        // client.connect();
-        // run()
-        // db.coll.insertOne({
-        //     username: newPlayerSaveData.username,
-        //     score: newPlayerSaveData.score
-        //   });
       });
 });
 
-
-
-
-  
 server.listen(3000, () => {
     console.log('listening on *:3000');
 });
 
-// app.listen(3000, () => {
-//     console.log('Server is up on port 3000.')
-// })
