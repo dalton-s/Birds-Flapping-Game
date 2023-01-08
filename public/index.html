@@ -89,8 +89,7 @@
                     if(playerBird.x < pipeContainer.getChildAt(i).getBounds().x + pipeContainer.getChildAt(i).getBounds().width &&
                     playerBird.x + playerBird.width > pipeContainer.getChildAt(i).getBounds().x &&
                     playerBird.y < pipeContainer.getChildAt(i).getBounds().y + pipeContainer.getChildAt(i).getBounds().height &&
-                    playerBird.y + playerBird.height > pipeContainer.getChildAt(i).getBounds().y) {
-                            //console.log("Collision Detected");
+                    playerBird.y + playerBird.height > pipeContainer.getChildAt(i).getBounds().y) {;
                             saveHighscore()
                             gameActive = false;
                     }
