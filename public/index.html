@@ -53,10 +53,10 @@
             const pipe = new PIXI.Sprite(pipeTexture);
             pipe.anchor.set(0.5);
             if(Math.floor(Math.random() * 2) == 0) { // Decides randomly if pipe should be rotated 180 degrees for variety
-                pipe.x = ((Math.random() * 150) + 600) * i;
+                pipe.x = (((Math.random() * 150) + 600) * i) + 400;
                 pipe.y = (Math.random() * 300) + 300;
             } else {
-                pipe.x = ((Math.random() * 150) + 600) * i;
+                pipe.x = (((Math.random() * 150) + 600) * i) + 400;
                 pipe.y = (Math.random() * 300) - 300;
                 pipe.rotation += 3.141593;
             }
