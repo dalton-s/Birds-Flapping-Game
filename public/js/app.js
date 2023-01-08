@@ -7,9 +7,6 @@ if(!localStorage.getItem('name')) {
 } else {
     playerData.username = localStorage.getItem('name')
     playerData.score = localStorage.getItem('score')
-    window.onload = () => {
-        document.getElementById('btn-1').innerHTML = playerData.score
-    }
 }
 
 buttonClicked = () => {
@@ -23,7 +20,6 @@ saveHighscore = () => {
     playerData.score = parseInt(score);
     localStorage.setItem('score', playerData.score)
     socket.emit('player save data', playerData);
-    //setTimeout(() => location.reload(), 300);
 }
 
 changeNameButtonClicked = () => {

@@ -4,14 +4,12 @@ html {
     text-align: center;
 }
 
+#btn-save { 
+
+    margin: 1.7em 0 1em 0;
+}
+
 h1 {
     color: #51585e;
 }
 
-img {
-    width: 250px;
-}
-
-#btn-1 {
-    width: 100px;
-}
