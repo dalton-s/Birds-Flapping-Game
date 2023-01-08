@@ -19,10 +19,11 @@ buttonClicked = () => {
     localStorage.setItem('score', playerData.score)
 }
 
-saveButtonClicked = () => {
+saveHighscore = () => {
+    playerData.score = parseInt(score);
     localStorage.setItem('score', playerData.score)
     socket.emit('player save data', playerData);
-    setTimeout(() => location.reload(), 300);
+    //setTimeout(() => location.reload(), 300);
 }
 
 changeNameButtonClicked = () => {

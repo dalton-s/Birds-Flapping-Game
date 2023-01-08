@@ -16,8 +16,10 @@
     <script>
         // Initializes Pixi.js
         let app = new PIXI.Application({ width: 640, height: 360 });
+        let gameActive = true; // Boolean for tracking if the game is over or not
         document.body.appendChild(app.view);
 
+        // Sky Background, also utilized to detect on-screen clicks
         let background = new PIXI.Graphics();
         background.beginFill(0x3500FA);
         background.drawRect(0, 0, 640, 360);
@@ -29,20 +31,37 @@
         background.interactive = true;
         background.on('pointerdown', (event) => { onPlayerInteraction(); });
 
+        // Score Text Code
         let score = 0;
         const basicText = new PIXI.Text('Score: ' + score);
         basicText.x = 10;
         basicText.y = 10;
-
         app.stage.addChild(basicText);
-        
+
+        // Player Bird Code
         let playerBird = PIXI.Sprite.from('img/bird.png');
         playerBird.anchor.set(0.5);
         playerBird.x = app.screen.width / 4;
         let playerYVelocity = 0;
         app.stage.addChild(playerBird);
+
+
+
+
+        
+
+        // (Enemy) Pipe Code
+        const pipeContainer = new PIXI.Container();
+        app.stage.addChild(pipeContainer);
+        const pipeTexture = PIXI.Texture.from('img/pipe.png');
+        for (let i = 1; i < 5; i++) {
+            const pipe = new PIXI.Sprite(pipeTexture);
+            pipe.x = ((Math.random() * 500) + 400) * i;
+            pipe.y = (Math.random() * 300) + 30;
+            pipeContainer.addChild(pipe);
+        }
     
-        // Add a variable to count up the seconds our demo has been running
+        // Add a variable to count up the seconds our demo has been running for calculating score
         let elapsed = 0.0;
 
         onPlayerInteraction = () => {
@@ -52,17 +71,34 @@
         // Tell our application's ticker to run a new callback every frame, passing
         // in the amount of time that has passed since the last tick
         app.ticker.add((delta) => {
-            score = elapsed / 10;
-            basicText.text = ('Score: ' + parseInt(score))
-            // Add the time to our total elapsed time
-            elapsed += delta;
-            if(playerYVelocity > -5) { (playerYVelocity = playerYVelocity - 0.07) * delta; }
-            if(playerBird.y > 340 && playerYVelocity < 0 || playerBird.y < 0 && playerYVelocity > 0) { playerYVelocity = 0; }
-            playerBird.y -= playerYVelocity * delta;
-            playerBird.rotation = ((playerYVelocity) * -0.20) + 0.15;
-            // Update the sprite's X position based on the cosine of our elapsed time.  We divide
-            // by 50 to slow the animation down a bit...
-            // playerBird.x = 100.0 + Math.cos(elapsed/50.0) * 100.0;
+            if(gameActive) {
+                score = elapsed / 10;
+                basicText.text = ('Score: ' + parseInt(score))
+                // Add the time to our total elapsed time
+                elapsed += delta;
+                if(playerYVelocity > -5) { (playerYVelocity = playerYVelocity - 0.07) * delta; }
+                if(playerBird.y > 340 && playerYVelocity < 0 || playerBird.y < 0 && playerYVelocity > 0) { playerYVelocity = 0; }
+                playerBird.y -= playerYVelocity * delta;
+                playerBird.rotation = ((playerYVelocity) * -0.20) + 0.15;
+                pipeContainer.x = pipeContainer.x - ((score/100) + 1.5);
+
+                // Collision Detection
+                for(let i = 0; i < pipeContainer.children.length; i++) {
+                    if(playerBird.x < pipeContainer.getChildAt(i).getBounds().x + pipeContainer.getChildAt(i).getBounds().width &&
+                    playerBird.x + playerBird.width > pipeContainer.getChildAt(i).getBounds().x &&
+                    playerBird.y < pipeContainer.getChildAt(i).getBounds().y + pipeContainer.getChildAt(i).getBounds().height &&
+                    playerBird.y + playerBird.height > pipeContainer.getChildAt(i).getBounds().y) {
+                            //console.log("Collision Detected");
+                            saveHighscore()
+                            gameActive = false;
+                    }
+                }
+            } else {
+                const gameOverText = new PIXI.Text('Game Over');
+                gameOverText.x = 250;
+                gameOverText.y = 150;
+                app.stage.addChild(gameOverText);
+            }
         });
 
     
@@ -95,7 +131,7 @@
         <li class="list-group-item"  id='highscore-slot-5'></li>
     </ul>
     <button type="button" id="btn-save" onclick="changeNameButtonClicked()" class="btn btn-secondary">Change Username</button>
-    <button type="button" id="btn-save" onclick="saveButtonClicked()" class="btn btn-secondary">Save To Highscores</button>
+    <button type="button" id="btn-save" onclick="saveHighscore()" class="btn btn-secondary">Save To Highscores</button>
 
     <script src="/socket.io/socket.io.js"></script>
 
@@ -112,7 +148,7 @@
 
 <div>
     <div class="fs-2 mb-3">
-        <p class="lead">A tech demo made with Node.js, Pixi.js, Express, MongoDB, Socket.io, and Bootstrap</p>
+        <p class="lead">A tech demo made with Node.js, Pixi.js, Express, MongoDB, and Socket.io</p>
         <a href="https://github.com/dalton-s" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
 <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
 </svg></a>
