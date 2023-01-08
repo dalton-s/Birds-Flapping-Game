@@ -5,8 +5,11 @@ html {
 }
 
 #btn-save { 
-
     margin: 1.7em 0 1em 0;
+}
+
+#github-link {
+    margin-top: -0.7em;
 }
 
 h1 {
