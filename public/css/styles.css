@@ -1,7 +1,12 @@
 html {
-    max-width: 500px;
     margin: auto;
     text-align: center;
+}
+
+ul { 
+    max-width: 350px; 
+    text-align: center;
+    margin: auto;
 }
 
 #btn-save { 
