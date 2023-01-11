@@ -87,7 +87,7 @@
                 // Collision Detection
                 for(let i = 0; i < pipeContainer.children.length; i++) {
                     if(playerBird.x < pipeContainer.getChildAt(i).getBounds().x + pipeContainer.getChildAt(i).getBounds().width &&
-                    playerBird.x + playerBird.width > pipeContainer.getChildAt(i).getBounds().x &&
+                    playerBird.x + playerBird.width / 2 > pipeContainer.getChildAt(i).getBounds().x &&
                     playerBird.y < pipeContainer.getChildAt(i).getBounds().y + pipeContainer.getChildAt(i).getBounds().height &&
                     playerBird.y + playerBird.height > pipeContainer.getChildAt(i).getBounds().y) {;
                             saveHighscore()
