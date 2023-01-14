@@ -1,7 +1,7 @@
 Node.js Game
 ===
 
-This application is made with Node.js, Express, Socket.io, Mongodb, and Bootstrap.
+A Game/Tech-demo made with Node.js, Express, Socket.io, Mongodb, and Bootstrap.
 
 Live version hosted at http://74.208.85.82:3000.
 
